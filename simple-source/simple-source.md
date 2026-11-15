@@ -32,9 +32,8 @@ Also works as expected, with a small note.
 
 ## Noteworthy
 
-- Inm this scenario, the proper jbang configuration means add 
-  `//SOURCES Item.java` in the main script. Without it, jbang does not see the 
-  other class in the package, even project export fais. The **IDE**, however, 
-  is perfectly able to see the class, therefore it autocompletes without 
-  issues, but the project does not compile. 
-
+- In IDE configuration, the `src` folder must added as source folder.
+- But then, the IDE will scan and identify all classes and packagers, but jbang 
+  fails if `//SOURCES Item.java` isn't present in the main script. Without it, 
+  jbang does not see the other class in the package, even project export fais. 
+  The **IDE** says that everything if fine but the project does not run.
