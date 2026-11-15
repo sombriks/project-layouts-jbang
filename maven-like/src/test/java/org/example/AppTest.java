@@ -4,8 +4,10 @@
 //DEPS org.hamcrest:hamcrest:3.0
 //DEPS org.junit.jupiter:junit-jupiter:6.1.3
 //DEPS org.junit.platform:junit-platform-console-standalone:6.1.3
-//SOURCES **/*.java
 //SOURCES ../../../../main/java/**/*.java
+//SOURCES **/*.java
+//FILES ../../../../main/resources
+//FILES ../../../resources
 
 package org.example;
 
