@@ -14,13 +14,20 @@ jbang init --java 17 --deps=tools.jackson.core:jackson-databind:3.3.0 Bare.java
 jbang run Bare.java
 ```
 
-## The export/eject result
+## Project export results
 
 By running:
 
 ```bash
 jbang export gradle Bare.java
 ```
+
+A perfectly valid gradle project is produced, no major issues. The same is 
+valid for `jbang export maven`.
+
+## Intellij jbang plugin
+
+This is the basic case for the plugin. Works perfectly.
 
 ## Noteworthy
 
