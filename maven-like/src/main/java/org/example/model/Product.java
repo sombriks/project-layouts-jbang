@@ -1,5 +1,8 @@
 package org.example.model;
 
-public record Product() {
+import com.fasterxml.jackson.annotation.JsonCreator;
 
+public record Product(String name) {
+    @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
+    public Product {}
 }

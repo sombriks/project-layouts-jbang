@@ -1,0 +1,4 @@
+---
+# this file does not override the one at main/resources
+products:
+  - grapes

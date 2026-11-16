@@ -32,3 +32,35 @@ jbang src/main/java/org/example/App.java
 ```bash
 jbang src/test/java/org/example/AppTest.java
 ```
+
+## Project export
+
+```bash
+jbang export gradle src/main/java/org/example/App.java
+```
+
+The test entry point, however, fails to export a valid project.
+
+## Intellij integration
+
+Using this layout with two entrypoints, the plugin works flawlessly, syncing 
+the classpath accordingly to the current entrypoint. If it complains about a 
+missing package, simply sync the project.
+
+Once source, resource and test folders get proper setup, both entrypoints 
+deliver a good IDE/autocomplete experience.
+
+But individual testcase execution does not work. For those scenarios, the 
+project export and manual copy of test resources and sources are the best 
+approach so far.
+
+## Noteworthy
+
+- For this example, two different enty points where provisioned. But the test 
+  one also includes sources and resources from the principal one. That way, the 
+  regular classpath doesn't get polluted with test-specific classes.
+- For some reason the resource folders does not produce the overrides people 
+  expect from maven/gradle. Need more investigation on that.
+- The same missing override on distinct resource folders also reappears as an 
+  error if one attempts to export a maven/gradle project using the test 
+  entry point.
