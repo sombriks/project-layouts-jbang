@@ -37,18 +37,24 @@ Both `jbang export maven src/Project.java` and
 `jbang export gradle src/Project.java` produces _almost_ valid projects. Since 
 there are several duplicated `//DEPS` entries all over the project, those 
 duplicates also lands in `build.gradle` and `pom.xml`. That is, however, not a 
-breaker like the export failure due to files with the same name as seen in the 
-maven-like experiment.
+deal-breaker like the export failure due to files with the same name as seen in 
+the [maven-like][maven-like] experiment.
+
+[maven-like]: ../maven-like/maven-like.md
 
 ## Intellij plugin behavior
 
-The plugin works with no surprises, however each file containing a jbang 
+The plugin works with no surprises, jbang is flexible enough to allow some 
+degree of _jazz_ in project setup. However, each file containing a `//DEPS` 
 directive is considered a jbang root. This might become troublesome, since the 
 real root remains being the `Project.java` script.
 
 Have the dependencies declared next to where they are used has mostly 
-educational value, therefore makes little sense to pollute the jbang roots with 
-that.
+educational value, therefore makes little sense to pollute the jbang 
+project with several possible faulty roots.
+
+Again, for jbang itself that's completely fine. The IDEs are the ones failing 
+to keep up with.
 
 ## Noteworthy
 
@@ -57,4 +63,4 @@ that.
   run just fine with jbang, but the ide will collapse in classpath errors, 
   unable to find classes that where supposed to be in the same package.
 - The single root with distinct options to run and test approach avoid the 
-  convoluted configuration seen in the maven-like experiment.
+  convoluted configuration seen in the [maven-like][maven-like] experiment.
