@@ -4,65 +4,73 @@
 
 package org.example.ui;
 
-import java.io.ByteArrayInputStream;
-import java.nio.charset.StandardCharsets;
+import atlantafx.base.theme.PrimerDark;
 import javafx.application.Application;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import org.example.service.Orders;
 
-import atlantafx.base.theme.PrimerDark;
+import java.io.ByteArrayInputStream;
+import java.nio.charset.StandardCharsets;
 
 public class Checkout extends Application {
 
+    private final Orders orders = new Orders();
+
     // language=FXML
     private static final String FXML_TEMPLATE = """
-        <?xml version="1.0" encoding="UTF-8"?>
-        <?import javafx.geometry.Insets?>
-        <?import javafx.scene.control.Button?>
-        <?import javafx.scene.control.Label?>
-        <?import javafx.scene.control.TextField?>
-        <?import javafx.scene.layout.VBox?>
-
-        <VBox alignment="CENTER" spacing="12" prefWidth="340" prefHeight="220"
-              xmlns="http://javafx.com"
-              xmlns:fx="http://javafx.com">
-            <padding>
-                <Insets top="20" right="20" bottom="20" left="20"/>
-            </padding>
-            <TextField fx:id="campoNome" promptText="Digite seu nome..." />
-            <Label fx:id="saudacao" />
-            <Button fx:id="botaoContar" text="Incrementar" onAction="#aoClicar" />
-        </VBox>
-        """;
-
-    private final StringProperty nome = new SimpleStringProperty("");
-    private final IntegerProperty cliques = new SimpleIntegerProperty(0);
-
-    @FXML private TextField campoNome;
-    @FXML private Label saudacao;
-    @FXML private Button botaoContar;
+            <?xml version="1.0" encoding="UTF-8"?>
+            <?import javafx.geometry.*?>
+            <?import javafx.scene.control.*?>
+            <?import javafx.scene.layout.*?>
+            <HBox spacing="16" prefWidth="950" prefHeight="550"
+                  xmlns="http://javafx.com"
+                  xmlns:fx="http://javafx.com">
+                <padding>
+                    <Insets top="16" right="16" bottom="16" left="16"/>
+                </padding>
+                <VBox spacing="8" HBox.hgrow="ALWAYS" prefWidth="280">
+                    <Label text="Pedidos (Orders)" style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
+                    <TextField fx:id="txtBuscarOrder" promptText="Filtrar por cliente..."/>
+                    <ListView fx:id="listOrders" VBox.vgrow="ALWAYS"/>
+                </VBox>
+                <VBox spacing="12" HBox.hgrow="ALWAYS" prefWidth="340">
+                    <VBox spacing="8">
+                        <Label text="Detalhes do Pedido" style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
+                        <Label text="Cliente:"/>
+                        <TextField fx:id="txtClient" promptText="Nome do cliente"/>
+                        <HBox spacing="8">
+                            <Button fx:id="btnNovoOrder" text="Novo" maxWidth="Infinity" HBox.hgrow="ALWAYS"/>
+                            <Button fx:id="btnSalvarOrder" text="Salvar" maxWidth="Infinity" HBox.hgrow="ALWAYS"/>
+                            <Button fx:id="btnExcluirOrder" text="Excluir" maxWidth="Infinity" HBox.hgrow="ALWAYS"/>
+                        </HBox>
+                    </VBox>
+                    <Separator/>
+                    <VBox spacing="8" VBox.vgrow="ALWAYS">
+                        <Label text="Itens do Pedido" style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
+                        <ListView fx:id="listItems" VBox.vgrow="ALWAYS"/>
+                    </VBox>
+                </VBox>
+                <VBox spacing="8" HBox.hgrow="ALWAYS" prefWidth="280">
+                    <Label text="Detalhes do Item" style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
+                    <Label text="Descrição:"/>
+                    <TextField fx:id="txtItemDescription" promptText="Descrição do item"/>
+                    <Label text="Quantidade:"/>
+                    <TextField fx:id="txtItemQuantity" promptText="0"/>
+                    <HBox spacing="8">
+                        <Button fx:id="btnNovoItem" text="Novo" maxWidth="Infinity" HBox.hgrow="ALWAYS"/>
+                        <Button fx:id="btnSalvarItem" text="Salvar" maxWidth="Infinity" HBox.hgrow="ALWAYS"/>
+                        <Button fx:id="btnExcluirItem" text="Excluir" maxWidth="Infinity" HBox.hgrow="ALWAYS"/>
+                    </HBox>
+                </VBox>
+            </HBox>
+            """;
 
     @FXML
-    private void aoClicar() {
-        cliques.set(cliques.get() + 1);
-    }
-
-    @FXML
-    public void initialize() {
-        campoNome.textProperty().bindBidirectional(nome);
-        saudacao.textProperty().bind(nome.map(n -> n.isBlank() ? "Olá, visitante!" : "Olá, " + n + "!"));
-        botaoContar.textProperty().bind(cliques.map(c -> "Cliques: " + c));
-        botaoContar.disableProperty().bind(cliques.greaterThanOrEqualTo(5));
+    private void initialize() {
     }
 
     @Override
@@ -70,10 +78,9 @@ public class Checkout extends Application {
         Application.setUserAgentStylesheet(new PrimerDark().getUserAgentStylesheet());
         FXMLLoader loader = new FXMLLoader();
         loader.setController(this);
-
         try (var stream = new ByteArrayInputStream(FXML_TEMPLATE.getBytes(StandardCharsets.UTF_8))) {
-            VBox root = loader.load(stream);
-            stage.setTitle("JavaFX Single-File + this");
+            HBox root = loader.load(stream);
+            stage.setTitle("JavaFX + JBang example");
             stage.setScene(new Scene(root));
             stage.show();
         }
