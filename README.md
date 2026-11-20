@@ -4,7 +4,7 @@ Small projects showing how to deal with distinct resource arrangements
 
 ## Motivation
 
-[JBang][jbang] scales well uo and down in the complexity tree, but a few 
+[JBang][jbang] scales well uo and down in the complexity tree, but a few
 guidelines are important in order to keep a familiar workflow for those already
 versed in IDEs and other build systems.
 
@@ -21,5 +21,4 @@ versed in IDEs and other build systems.
 
 - Does it behave well with jbang itself?
 - The export options produces usable maven/grade/IDE configurations?
-- How well it is supported by IDE's?
-
+- How well it behaves with official intellij jbang plugin?
